@@ -1,0 +1,176 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+//http://kylehalladay.com/blog/tutorial/2014/06/27/Compute-Shaders-Are-Nifty.html
+//
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+
+//local geometry in cam coordinate system (does not need to be RWTex)
+Texture2D<float4> posI1; // intensity 1
+Texture2D<float4> posI2; // intensity 2
+Texture2D<float4> posP; // not actually a camera but a projector
+
+float4 projI;//intrinsics camera
+float4x4 poseI1toP;//transform from one camera to projector
+//transform from one camera to second
+float4x4 poseI1toI2;
+
+//resolution of the cameras
+float4 res;//resolution of both IRCameras & ir emitter
+float4 projP;
+
+
+float zNear;
+float zFar;
+
+float4 patternRect;
+
+
+float cutoff;
+
+float zToDepth(float z_b){
+    float z_n = -2.0f * z_b + 1.0f;
+    float z_e = 2.0f * zNear * zFar / (zFar + zNear - z_n * (zFar - zNear));
+    return z_e;
+}
+//storing of vertical position here... also a mask
+RWTexture2D<float4> gt;
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    if(id.x >= res.x || id.y >= res.y){
+        return;
+    }
+    
+    bool projectorShadow = false;
+    bool cameraShadow = false;
+    float depth = zToDepth(posI1[id.xy]);
+    
+    if(depth > cutoff){
+        gt[id.xy] = float4(0,1,1,1);
+        return;
+    }
+    float4 pI1 = 
+        float4(
+            depth * (id.x - res.x * 0.5f) / projI.z,
+            depth * (id.y - res.y * 0.5f) / projI.w,
+            depth,
+            1.0f);
+      
+            
+    //gt[id.xy] = pos;
+    
+    //float4 pos = posC[id.xy];
+    //float zet= zToDepth(pos.x) * 1.0f;
+    //zet = pos.x * 10.0f -1.5f;
+    //gt[id.xy] = float4(zet,zet,zet,1);
+    //return;
+    //transform to the projector coordinate system
+
+    
+    //***CALC DISPARITY TO PROJECTOR***    
+    float4  pP = mul(poseI1toP,pI1);
+
+    float f = projP.z;
+    float xf = pP.x * f / pP.z + res.z * 0.5f;
+    float yf = pP.y * f / pP.z + res.w * 0.5f;
+    
+    
+    //bool isWithin = false;
+    float truth = -1.0f;
+    if( xf > patternRect.x && xf < (patternRect.x+patternRect.z) &&
+        (res.w-yf) > patternRect.y && (res.w-yf) < (patternRect.y+patternRect.w)){//y is from bottom up
+        //isWithin = true;
+        truth=(xf-patternRect.x)/patternRect.z;
+    }
+   
+    
+    //workaROUND rounding
+    xf = xf + 0.5f;
+    yf = yf + 0.5f;
+    uint2 p;
+    p.x = xf;
+    p.y = yf; 
+    
+    //gt[id.xy] = float4(xf/1280.0f,yf/960.0f,0,1);//debug
+    
+      
+    if(p.x >= res.z || p.y >= res.w || p.x<0 || p.y < 0){ 
+        //gt[id.xy] = float4(0,0,1,1);
+        projectorShadow = true;
+        //return;
+    }
+    
+    float depthP = zToDepth(posP[p].x);
+    
+    float delta = abs(depthP - pP.z);
+    
+    
+
+    
+    if(delta > 0.01f*depthP){//2cm per meter should be sufficient
+        //gt[id.xy] = float4(0,1,0,1);
+        //return;
+        projectorShadow = true;
+    }
+    
+    
+    
+    gt[id.xy] = float4((xf - id.x) * 256.0f,0,0,1);
+    
+    //***CALC DISPARITY TO PROJECTOR***  
+    float4 pI2 = mul(poseI1toI2,pI1);
+    
+    
+    f = projI.z;
+    xf = pI2.x * f / pI2.z + res.x * 0.5f;
+    yf = pI2.y * f / pI2.z + res.y * 0.5f;
+    
+    
+    //workaROUND rounding
+    xf = xf + 0.5f;
+    yf = yf + 0.5f;
+    p.x = xf;
+    p.y = yf; 
+    
+    if(p.x >= res.x || p.y >= res.y || p.x<0 || p.y < 0){ 
+        //gt[id.xy] = float4(0,0,1,1);
+        cameraShadow = true;
+        //return;
+    }
+    
+    
+    float depthI2 = zToDepth(posI2[p].x);
+    delta = abs(depthI2 - pI2.z);
+    
+    
+
+    
+    if(delta > 0.01f*depthP){//2cm per meter should be sufficient
+        //gt[id.xy] = float4(0,1,0,1);
+        //return;
+        cameraShadow = true;
+    }
+    
+    
+    gt[id.xy] = float4(-(xf - id.x) ,(float)projectorShadow,(float)cameraShadow,1);//(float) cameraShadow,(float)projectorShadow,1);
+    
+    //The old code calculating the disparity to the pattern
+    /*
+    if(truth < 0.0f){
+        gt[id.xy] = float4(0,1,1,1);
+        return;
+    }
+    gt[id.xy] = float4(truth,0,0,1);// /
+    */
+    
+    //gt[id.xy] = pos;
+    
+    
+}
+

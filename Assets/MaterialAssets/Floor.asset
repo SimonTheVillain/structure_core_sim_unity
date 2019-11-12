@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b73941309c1449fd900ba184b820d101, type: 3}
+  m_Name: Floor
+  m_EditorClassIdentifier: 
+  materials:
+  - probability: 100
+    material: {fileID: 2100000, guid: d401505a1ee6842788e017d826aae8e3, type: 2}
+  - probability: 1
+    material: {fileID: 2100000, guid: e0bcb92b647be41dc8b0a6246349276c, type: 2}
+  - probability: 1
+    material: {fileID: 2100000, guid: f966a18bd650b43d5b51d189bc6fd673, type: 2}
+  - probability: 1
+    material: {fileID: 2100000, guid: 6e76c2769db71459e8c17e79138dcbf3, type: 2}
+  - probability: 1
+    material: {fileID: 2100000, guid: f3be1a262f240424a83db2fb6bb96a0a, type: 2}
