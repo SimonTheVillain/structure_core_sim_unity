@@ -161,13 +161,13 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     gt[id.xy] = float4(-(xf - id.x) ,(float)projectorShadow,(float)cameraShadow,1);//(float) cameraShadow,(float)projectorShadow,1);
     
     //The old code calculating the disparity to the pattern
-    /*
+    
     if(truth < 0.0f){
         gt[id.xy] = float4(0,1,1,1);
         return;
     }
     gt[id.xy] = float4(truth,0,0,1);// /
-    */
+    
     
     //gt[id.xy] = pos;
     

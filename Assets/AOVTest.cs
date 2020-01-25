@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.Experimental.Rendering.HDPipeline;
-using UnityEngine.Experimental.Rendering.HDPipeline.Attributes;
-using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition.Attributes;
+using UnityEngine.Rendering.HighDefinition;
 using System.Linq;
+
+#if UNITY_2019_3_OR_NEWER
+public class AOVTest : MonoBehaviour
+{
+
+}
+#else
 
 public class AOVTest : MonoBehaviour
 {
@@ -57,7 +62,7 @@ public class AOVTest : MonoBehaviour
         aovRequest.SetFullscreenOutput(MaterialSharedProperty.Albedo);
         //obviously m_colorRT is not set here
         //var bufAlloc = m_ColorRT ?? (m_ColorRT = RTHandles.Alloc(sce.widthIR, sce.heightIR));
-        RTHandleSystem.RTHandle ColorRT = RTHandles.Alloc(width, height);
+        RTHandle ColorRT = RTHandles.Alloc(width, height);
 
 
         var aovRequestBuilder = new AOVRequestBuilder();
@@ -203,3 +208,4 @@ public class AOVTest : MonoBehaviour
     }
 
 }
+#endif

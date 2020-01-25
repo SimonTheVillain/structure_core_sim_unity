@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.Experimental.Rendering.HDPipeline;
-using UnityEngine.Experimental.Rendering.HDPipeline.Attributes;
+using UnityEngine.Rendering.HighDefinition.Attributes;
+using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.Rendering;
+using UnityEngine.Experimental.Rendering;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using UnityTemplateProjects;
@@ -56,9 +56,9 @@ public class StructureCore : MonoBehaviour
     
     private RenderTexture tempRT_P;
     
-    private RTHandleSystem.RTHandle readbackLHandle;
-    private RTHandleSystem.RTHandle readbackRHandle;
-    private RTHandleSystem.RTHandle readbackPHandle;
+    private RTHandle readbackLHandle;
+    private RTHandle readbackRHandle;
+    private RTHandle readbackPHandle;
     
     private 
     // Start is called before the first frame update
@@ -388,7 +388,7 @@ public class StructureCore : MonoBehaviour
     }
 */
 
-    void ReadDepth(Camera c,int width,int height,Texture2D readbackTexture,RenderTexture m_TempRT,RTHandleSystem.RTHandle readbackTextureHandle)
+    void ReadDepth(Camera c,int width,int height,Texture2D readbackTexture,RenderTexture m_TempRT,RTHandle readbackTextureHandle)
     {
         HDAdditionalCameraData hdacd = c.GetComponent<HDAdditionalCameraData>();
         //hdacd.
@@ -411,7 +411,7 @@ public class StructureCore : MonoBehaviour
         //obviously m_colorRT is not set here
         //var bufAlloc = m_ColorRT ?? (m_ColorRT = RTHandles.Alloc(sce.widthIR, sce.heightIR));
         //RTHandleSystem.RTHandle ColorRT = RTHandles.Alloc(width, height,1,DepthBits.None,GraphicsFormat.R32G32B32A32_SFloat);
-        RTHandleSystem.RTHandle ColorRT = readbackTextureHandle;
+        RTHandle ColorRT = readbackTextureHandle;
 
         var aovRequestBuilder = new AOVRequestBuilder();
         aovRequestBuilder.Add(aovRequest,
