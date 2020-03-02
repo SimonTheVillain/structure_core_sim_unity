@@ -1,0 +1,30 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+Texture2D<float4> src; // intensity 1
+RWTexture2D<float4> dst;
+uint width;
+uint height;
+int size;
+
+[numthreads(16,16,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    // TODO: insert actual code here!
+    if(id.x >= width || id.y >= height){
+        return;
+    }
+    //culumative pixel value
+    float4 cul = float4(0,0,0,0);
+    for(int i=0;i<size;i++){
+        for(int j=0;j<size;j++){
+            uint2 pos = uint2(id.x*size + i, id.y*size + j);
+            cul += src[pos];
+        }
+    }
+    float scale = 1.0/float(size);
+    dst[id.xy] = cul * scale;
+
+}

@@ -11,6 +11,7 @@ using UnityTemplateProjects;
 
 public class StructureCore : MonoBehaviour
 {
+    
     public string screenshotPath;
     public int heightIR;
     public int widthIR;
@@ -42,6 +43,10 @@ public class StructureCore : MonoBehaviour
 
     public Rect patternRect;
 
+
+    public Texture2D patternTexture;
+    public Texture2D maskTexture;
+
     public bool autocaptureMode = false;
 
     private CameraVolume[] volumes;
@@ -59,8 +64,15 @@ public class StructureCore : MonoBehaviour
     private RTHandle readbackLHandle;
     private RTHandle readbackRHandle;
     private RTHandle readbackPHandle;
-    
-    private 
+
+
+    public float projectorIntensitySpecles = 1200000;
+    public float projectorIntensityMask = 600000;
+
+    public RenderTexture leftSS;
+    public RenderTexture left;
+    public RenderTexture rightSS;
+    public RenderTexture right;
     // Start is called before the first frame update
     void Start()
     {
@@ -110,7 +122,7 @@ public class StructureCore : MonoBehaviour
     }
 
 
-    private int countdown = 30;
+    //private int countdown = 30;
     // Update is called once per frame
     void Update()
     {
@@ -130,7 +142,9 @@ public class StructureCore : MonoBehaviour
         //return;
         CollectFrameNow();
 
-        
+        //HDAdditionalCameraData add = camL.GetComponent<HDAdditionalCameraData>()
+       
+
         float volume = 0.0f;
         for (int i = 0; i < volumes.Length; i++)
         {
@@ -226,11 +240,33 @@ public class StructureCore : MonoBehaviour
         //store the rendertextures of each camera.
         //StoreAs(camL.targetTexture,screenshotPath + "/" + count + "_l.png",false);
         //StoreAs(camR.targetTexture,screenshotPath + "/" + count + "_r.png",false);
+ 
         StoreAs(camL.targetTexture,screenshotPath + "/" + count + "_l.exr",true);
         StoreAs(camR.targetTexture,screenshotPath + "/" + count + "_r.exr",true);
         StoreAs(camP.targetTexture,screenshotPath + "/" + count + "_p.png",false);
-        
-        
+        projector.cookie = maskTexture;
+        projector.intensity = projectorIntensityMask;
+        camL.Render();
+        camR.Render();
+        camP.Render();
+        StoreAs(camL.targetTexture, screenshotPath + "/" + count + "_l_w.exr", true);
+        StoreAs(camR.targetTexture, screenshotPath + "/" + count + "_r_w.exr", true);
+        StoreAs(camP.targetTexture, screenshotPath + "/" + count + "_p_w.png", false);
+        projector.gameObject.SetActive(false);
+        camL.Render();
+        camR.Render();
+        camP.Render();
+        StoreAs(camL.targetTexture, screenshotPath + "/" + count + "_l_wo.exr", true);
+        StoreAs(camR.targetTexture, screenshotPath + "/" + count + "_r_wo.exr", true);
+        StoreAs(camP.targetTexture, screenshotPath + "/" + count + "_p_wo.png", false);
+
+        //cleanup
+        projector.gameObject.SetActive(true);
+        projector.cookie = patternTexture;
+        projector.intensity = projectorIntensitySpecles;
+
+
+
         //render albedo via AOV
         ReadDepth(camL, widthIR, heightIR,readbackL,tempRT_I,readbackLHandle);
         ReadDepth(camR, widthIR, heightIR,readbackR,tempRT_I,readbackRHandle);
@@ -404,7 +440,7 @@ public class StructureCore : MonoBehaviour
         RenderTexture m_TempRT = new RenderTexture(width, height, 24, RenderTextureFormat.ARGBFloat,
             RenderTextureReadWrite.Default);
         */
-        var aovRequest = new AOVRequest(AOVRequest.@default); ;
+        var aovRequest = new AOVRequest(AOVRequest.NewDefault());
         
         aovRequest.SetFullscreenOutput(DebugFullScreen.Depth);
         var aovBuffer = AOVBuffers.DepthStencil;
