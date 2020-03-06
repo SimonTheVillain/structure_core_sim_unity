@@ -77,8 +77,8 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     float4  pP = mul(poseI1toP,pI1);
 
     float f = projP.z;
-    float xf = pP.x * f / pP.z + res.z * 0.5f;
-    float yf = pP.y * f / pP.z + res.w * 0.5f;
+    float xf = pP.x * f / pP.z + res.z * 0.5f; //pixel position within projector
+    float yf = pP.y * f / pP.z + res.w * 0.5f; //--/--
     
     
     //bool isWithin = false;
@@ -86,7 +86,8 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     if( xf > patternRect.x && xf < (patternRect.x+patternRect.z) &&
         (res.w-yf) > patternRect.y && (res.w-yf) < (patternRect.y+patternRect.w)){//y is from bottom up
         //isWithin = true;
-        truth=(xf-patternRect.x)/patternRect.z;
+        truth = xf/res.z;//normalized pixel position in pattern projector. 
+        //Old was only within pattern://truth = (xf-patternRect.x)/patternRect.z;
     }
    
     
@@ -138,11 +139,15 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     p.x = xf;
     p.y = yf; 
     
+
+    //TODO: completely remove this! its nonsensical?
+    /*
     if(p.x >= res.x || p.y >= res.y || p.x<0 || p.y < 0){ 
         //gt[id.xy] = float4(0,0,1,1);
         cameraShadow = true;
         //return;
     }
+    */
     
     
     float depthI2 = zToDepth(posI2[p].x);
@@ -163,10 +168,13 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     //The old code calculating the disparity to the pattern
     
     if(truth < 0.0f){
+        //we are outside the boundaries for the sensor
         gt[id.xy] = float4(0,1,1,1);
         return;
     }
-    gt[id.xy] = float4(truth,0,0,1);// /
+    float x_normalized = id.x / float(res.x); //TODO: store truth - x_normalized to overcome float16 inaccuracies
+   
+    gt[id.xy] = float4(truth - x_normalized,float(cameraShadow),0,1);// /
     
     
     //gt[id.xy] = pos;
