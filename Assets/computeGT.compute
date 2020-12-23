@@ -21,12 +21,10 @@ float4x4 poseI1toI2;
 float4 res;//resolution of both IRCameras & ir emitter
 float4 projP;
 
+float4 patternRect;
 
 float zNear;
 float zFar;
-
-float4 patternRect;
-
 
 float cutoff;
 
@@ -48,12 +46,11 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     }
     
     bool projectorShadow = false;
-    bool cameraShadow = false;
     float depth = zToDepth(posI1[id.xy]);
     
     if(depth > cutoff){
-        gt[id.xy] = float4(0,1,1,1);
-        return;
+        //gt[id.xy] = float4(0,1,depth,1);
+        //return;#TODO: put this back in!
     }
     float4 pI1 = 
         float4(
@@ -61,17 +58,6 @@ void CSMain (uint3 id : SV_DispatchThreadID)
             depth * (id.y - res.y * 0.5f) / projI.w,
             depth,
             1.0f);
-      
-            
-    //gt[id.xy] = pos;
-    
-    //float4 pos = posC[id.xy];
-    //float zet= zToDepth(pos.x) * 1.0f;
-    //zet = pos.x * 10.0f -1.5f;
-    //gt[id.xy] = float4(zet,zet,zet,1);
-    //return;
-    //transform to the projector coordinate system
-
     
     //***CALC DISPARITY TO PROJECTOR***    
     float4  pP = mul(poseI1toP,pI1);
@@ -81,14 +67,14 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     float yf = pP.y * f / pP.z + res.w * 0.5f; //--/--
     
     
-    //bool isWithin = false;
-    float truth = -1.0f;
+    bool isWithin = false;
+    float truth = xf/res.z;//normalized pixel position in pattern projector.
+    
     if( xf > patternRect.x && xf < (patternRect.x+patternRect.z) &&
         (res.w-yf) > patternRect.y && (res.w-yf) < (patternRect.y+patternRect.w)){//y is from bottom up
-        //isWithin = true;
-        truth = xf/res.z;//normalized pixel position in pattern projector. 
-        //Old was only within pattern://truth = (xf-patternRect.x)/patternRect.z;
+        isWithin = true;
     }
+    
    
     
     //workaROUND rounding
@@ -98,40 +84,28 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     p.x = xf;
     p.y = yf; 
     
-    //gt[id.xy] = float4(xf/1280.0f,yf/960.0f,0,1);//debug
-    
-      
     if(p.x >= res.z || p.y >= res.w || p.x<0 || p.y < 0){ 
-        //gt[id.xy] = float4(0,0,1,1);
         projectorShadow = true;
-        //return;
     }
     
     float depthP = zToDepth(posP[p].x);
     
     float delta = abs(depthP - pP.z);
-    
-    
-
-    
     if(delta > 0.01f*depthP){//2cm per meter should be sufficient
-        //gt[id.xy] = float4(0,1,0,1);
-        //return;
         projectorShadow = true;
     }
     
     
+    //gt[id.xy] = float4((xf - id.x) * 256.0f,0,0,1);
     
-    gt[id.xy] = float4((xf - id.x) * 256.0f,0,0,1);
+    /***CALC DISPARITY TO OTHER CAM***  
     
-    //***CALC DISPARITY TO PROJECTOR***  
+    bool cameraShadow = false;
     float4 pI2 = mul(poseI1toI2,pI1);
-    
-    
+
     f = projI.z;
-    xf = pI2.x * f / pI2.z + res.x * 0.5f;
-    yf = pI2.y * f / pI2.z + res.y * 0.5f;
-    
+    xf = pI2.x * f / pI2.z + res.z * 0.5f; //res.x is for the sensor not the projector
+    yf = pI2.y * f / pI2.z + res.w * 0.5f; //res.y is for the sensor not the projector
     
     //workaROUND rounding
     xf = xf + 0.5f;
@@ -140,45 +114,26 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     p.y = yf; 
     
 
-    //TODO: completely remove this! its nonsensical?
-    /*
-    if(p.x >= res.x || p.y >= res.y || p.x<0 || p.y < 0){ 
-        //gt[id.xy] = float4(0,0,1,1);
-        cameraShadow = true;
-        //return;
-    }
-    */
-    
     
     float depthI2 = zToDepth(posI2[p].x);
     delta = abs(depthI2 - pI2.z);
     
     
-
-    
     if(delta > 0.01f*depthP){//2cm per meter should be sufficient
-        //gt[id.xy] = float4(0,1,0,1);
-        //return;
         cameraShadow = true;
     }
+    */
     
-    
-    gt[id.xy] = float4(-(xf - id.x) ,(float)projectorShadow,(float)cameraShadow,1);//(float) cameraShadow,(float)projectorShadow,1);
-    
-    //The old code calculating the disparity to the pattern
-    
+    //gt[id.xy] = float4(-(xf - id.x) ,(float)projectorShadow,(float)cameraShadow,1);//(float) cameraShadow,(float)projectorShadow,1);
+        
+    float x_normalized = id.x / float(res.x);
     if(truth < 0.0f){
         //we are outside the boundaries for the sensor
-        gt[id.xy] = float4(0,1,1,1);
-        return;
+        //gt[id.xy] = float4(truth - x_normalized,1,depth,1);
+        //return;
     }
-    float x_normalized = id.x / float(res.x); //TODO: store truth - x_normalized to overcome float16 inaccuracies
    
-    gt[id.xy] = float4(truth - x_normalized,float(cameraShadow),0,1);// /
+    gt[id.xy] = float4(truth - x_normalized, float(projectorShadow) + float(isWithin) * 2.0, depth, 1);
     
-    
-    //gt[id.xy] = pos;
-    
-    
+    //gt[id.xy] = float4(xf, float(projectorShadow) * 1.0 + float(isWithin) * 2.0, depth, 1);
 }
-

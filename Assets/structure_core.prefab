@@ -65,7 +65,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 7f05ac09605807140a509b633b9d44c3, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -146,6 +146,11 @@ MonoBehaviour:
   dithering: 0
   stopNaNs: 0
   taaSharpenStrength: 0.6
+  TAAQuality: 1
+  taaHistorySharpening: 0.35
+  taaAntiFlicker: 0.5
+  taaMotionVectorRejection: 0
+  taaAntiHistoryRinging: 0
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -155,6 +160,7 @@ MonoBehaviour:
     m_BarrelClipping: 0.25
     m_Anamorphism: 0
   flipYMode: 0
+  xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
   customRenderingSettings: 0
@@ -163,6 +169,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   hasPersistentHistory: 0
+  exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
     bitDatas:
       data1: 70005819440989
@@ -173,6 +180,9 @@ MonoBehaviour:
     maximumLODLevel: 0
     maximumLODLevelMode: 0
     maximumLODLevelQualityLevel: 0
+    sssQualityMode: 0
+    sssQualityLevel: 0
+    sssCustomSampleBudget: 20
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
@@ -334,6 +344,11 @@ MonoBehaviour:
   dithering: 0
   stopNaNs: 0
   taaSharpenStrength: 0.6
+  TAAQuality: 1
+  taaHistorySharpening: 0.35
+  taaAntiFlicker: 0.5
+  taaMotionVectorRejection: 0
+  taaAntiHistoryRinging: 0
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -343,6 +358,7 @@ MonoBehaviour:
     m_BarrelClipping: 0.25
     m_Anamorphism: 0
   flipYMode: 0
+  xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
   customRenderingSettings: 0
@@ -351,6 +367,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   hasPersistentHistory: 0
+  exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
     bitDatas:
       data1: 70005819440989
@@ -361,6 +378,9 @@ MonoBehaviour:
     maximumLODLevel: 0
     maximumLODLevelMode: 0
     maximumLODLevelQualityLevel: 0
+    sssQualityMode: 0
+    sssQualityLevel: 0
+    sssCustomSampleBudget: 20
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
@@ -432,7 +452,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 72ad04a1f29dc804e92cd86791fc4d19, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -513,6 +533,11 @@ MonoBehaviour:
   dithering: 0
   stopNaNs: 0
   taaSharpenStrength: 0.6
+  TAAQuality: 1
+  taaHistorySharpening: 0.35
+  taaAntiFlicker: 0.5
+  taaMotionVectorRejection: 0
+  taaAntiHistoryRinging: 0
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -522,6 +547,7 @@ MonoBehaviour:
     m_BarrelClipping: 0.25
     m_Anamorphism: 0
   flipYMode: 0
+  xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
   customRenderingSettings: 0
@@ -530,6 +556,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   hasPersistentHistory: 0
+  exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
     bitDatas:
       data1: 70005819440989
@@ -540,6 +567,9 @@ MonoBehaviour:
     maximumLODLevel: 0
     maximumLODLevelMode: 0
     maximumLODLevelQualityLevel: 0
+    sssQualityMode: 0
+    sssQualityLevel: 0
+    sssCustomSampleBudget: 20
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
@@ -594,7 +624,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976259518f753238f97e22233471e871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenshotPath: /home/simon/datasets/unity_rendered
+  camLeft:
+    cam: {fileID: 6198338251392268697}
+    res: {x: 1401, y: 1001}
+    f: 1115.44
+    computeShaderNormals: {fileID: 7200000, guid: 5d8b7dc564b6b0044a9eaf0ee34a1d30,
+      type: 3}
+    computeShaderGamma: {fileID: 7200000, guid: 1ec152bbb2856f64ca57a5e768028092,
+      type: 3}
+  camRight:
+    cam: {fileID: 6198338252226430473}
+    res: {x: 1401, y: 1001}
+    f: 1115.44
+    computeShaderNormals: {fileID: 7200000, guid: 5d8b7dc564b6b0044a9eaf0ee34a1d30,
+      type: 3}
+    computeShaderGamma: {fileID: 7200000, guid: 1ec152bbb2856f64ca57a5e768028092,
+      type: 3}
+  cameraProjector: {fileID: 6198338252443129381}
+  focalProjector: 1700
+  resProjector: 2048
+  screenshotPath: /home/simon/datasets/structure_core_unity
+  patternTexture: {fileID: 2800000, guid: 1162e152dcab8c840b4b6a4dba5893eb, type: 3}
+  maskTexture: {fileID: 2800000, guid: ffbc09450fa772748bbbdb37264e85aa, type: 3}
+  computeShaderGroundtruth: {fileID: 7200000, guid: 19e976dff204e7445b7a6cd38135b214,
+    type: 3}
+  zNear: 0.3
+  zFar: 1000
+  cutoff: 50
+  count: 0
+  stop_count: 100000
   heightIR: 896
   widthIR: 1216
   heightProj: 960
@@ -604,29 +662,22 @@ MonoBehaviour:
   camP: {fileID: 6198338252443129381}
   projector: {fileID: 6198338252454193889}
   intrinsicsLR: {x: 604, y: 457, z: 1115.44, w: 1115.44}
-  intrinsicsP: {x: 640, y: 512, z: 1115.44, w: 1115.44}
+  intrinsicsP: {x: 1024, y: 1024, z: 950, w: 1115.44}
   computeShader: {fileID: 7200000, guid: 3bcf543b1d1e70ab396413bb710d1993, type: 3}
   locPosMat: {fileID: 2100000, guid: 5e2d9d0850fce62358d343f5f1de956d, type: 2}
-  simpleCameraController: {fileID: 6198338252235162890}
-  zNear: 0.3
-  zFar: 1000
-  cutoff: 50
   patternRect:
     serializedVersion: 2
     x: 28
     y: 21
     width: 1223
     height: 901
-  patternTexture: {fileID: 2800000, guid: 038fdbd0c5bc5144b995358b89ca28fe, type: 3}
-  maskTexture: {fileID: 2800000, guid: 5a4ce9213f1efa34aa57580083ed3c2e, type: 3}
   autocaptureMode: 0
   projectorIntensitySpecles: 1200000
   projectorIntensityMask: 600000
-  leftSS: {fileID: 8400000, guid: 102f2a9e8b62952e59a7e8bc54bfedc4, type: 2}
-  left: {fileID: 8400000, guid: 7f05ac09605807140a509b633b9d44c3, type: 2}
-  rightSS: {fileID: 8400000, guid: 2d7843838b09bf63989ebed440754619, type: 2}
-  right: {fileID: 8400000, guid: 72ad04a1f29dc804e92cd86791fc4d19, type: 2}
-  count: 0
+  leftSS: {fileID: 0}
+  left: {fileID: 0}
+  rightSS: {fileID: 0}
+  right: {fileID: 0}
 --- !u!114 &6198338252235162890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +784,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: d554547d21aa8cc9b8d481d4aa224eec, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -814,6 +865,11 @@ MonoBehaviour:
   dithering: 0
   stopNaNs: 0
   taaSharpenStrength: 0.6
+  TAAQuality: 1
+  taaHistorySharpening: 0.35
+  taaAntiFlicker: 0.5
+  taaMotionVectorRejection: 0
+  taaAntiHistoryRinging: 0
   physicalParameters:
     m_Iso: 200
     m_ShutterSpeed: 0.005
@@ -823,6 +879,7 @@ MonoBehaviour:
     m_BarrelClipping: 0.25
     m_Anamorphism: 0
   flipYMode: 0
+  xrRendering: 1
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
   customRenderingSettings: 0
@@ -831,6 +888,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   hasPersistentHistory: 0
+  exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
     bitDatas:
       data1: 70005819440989
@@ -841,6 +899,9 @@ MonoBehaviour:
     maximumLODLevel: 0
     maximumLODLevelMode: 0
     maximumLODLevelQualityLevel: 0
+    sssQualityMode: 0
+    sssQualityLevel: 0
+    sssCustomSampleBudget: 20
     materialQuality: 0
   renderingPathCustomFrameSettingsOverrideMask:
     mask:
@@ -893,8 +954,8 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 47746.48
   m_Range: 10
-  m_SpotAngle: 46
-  m_InnerSpotAngle: 4
+  m_SpotAngle: 45
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
@@ -905,12 +966,12 @@ Light:
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
-      e00: 2.3558524
+      e00: 2.4142134
       e01: 0
       e02: 0
       e03: 0
       e10: 0
-      e11: 2.3558524
+      e11: 2.4142134
       e12: 0
       e13: 0
       e20: 0
@@ -922,7 +983,7 @@ Light:
       e32: 1
       e33: 0
     m_UseCullingMatrixOverride: 1
-  m_Cookie: {fileID: 2800000, guid: 038fdbd0c5bc5144b995358b89ca28fe, type: 3}
+  m_Cookie: {fileID: 2800000, guid: 1162e152dcab8c840b4b6a4dba5893eb, type: 3}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0
@@ -932,12 +993,13 @@ Light:
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
-  m_AreaSize: {x: 1, y: 1}
+  m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 10}
   m_UseBoundingSphereOverride: 1
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!114 &6198338252454193888
@@ -952,7 +1014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 9
+  m_Version: 11
   m_ObsoleteShadowResolutionTier: 1
   m_ObsoleteUseShadowQualitySettings: 0
   m_ObsoleteCustomShadowResolution: 512
@@ -964,10 +1026,12 @@ MonoBehaviour:
   m_EnableSpotReflector: 0
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
+  m_SpotIESCutoffPercent: 100
   m_LightDimmer: 1
   m_VolumetricDimmer: 1
   m_LightUnit: 0
   m_FadeDistance: 10000
+  m_VolumetricFadeDistance: 10000
   m_AffectDiffuse: 1
   m_AffectSpecular: 1
   m_NonLightmappedOnly: 0
@@ -977,11 +1041,14 @@ MonoBehaviour:
   m_ShapeRadius: 0
   m_SoftnessScale: 1
   m_UseCustomSpotLightShadowCone: 0
-  m_CustomSpotLightShadowCone: 30
+  m_CustomSpotLightShadowCone: 1
   m_MaxSmoothness: 0.99
   m_ApplyRangeAttenuation: 1
   m_DisplayAreaLightEmissiveMesh: 0
   m_AreaLightCookie: {fileID: 0}
+  m_IESPoint: {fileID: 0}
+  m_IESSpot: {fileID: 0}
+  m_IncludeForRayTracing: 1
   m_AreaLightShadowCone: 120
   m_UseScreenSpaceShadows: 0
   m_InteractsWithSky: 1
@@ -998,6 +1065,9 @@ MonoBehaviour:
   m_FilterSizeTraced: 16
   m_SunLightConeAngle: 0.5
   m_LightShadowRadius: 0.5
+  m_SemiTransparentShadow: 0
+  m_ColorShadow: 1
+  m_DistanceBasedFiltering: 0
   m_EvsmExponent: 15
   m_EvsmLightLeakBias: 0
   m_EvsmVarianceBias: 0.00001
@@ -1028,8 +1098,13 @@ MonoBehaviour:
   m_NormalBias: 0.75
   m_SlopeBias: 0.5
   m_ShadowUpdateMode: 0
+  m_AlwaysDrawDynamicShadows: 0
+  m_UpdateShadowOnLightMovement: 0
+  m_CachedShadowTranslationThreshold: 0.01
+  m_CachedShadowAngularThreshold: 0.5
   m_BarnDoorAngle: 90
   m_BarnDoorLength: 0.05
+  m_preserveCachedShadow: 0
   m_ShadowCascadeRatios:
   - 0.05
   - 0.2
@@ -1046,3 +1121,6 @@ MonoBehaviour:
   useVolumetric: 0
   featuresFoldout: 1
   showAdditionalSettings: 0
+  m_AreaLightEmissiveMeshShadowCastingMode: 0
+  m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
+  m_AreaLightEmissiveMeshLayer: -1

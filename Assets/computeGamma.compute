@@ -1,0 +1,30 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+//http://kylehalladay.com/blog/tutorial/2014/06/27/Compute-Shaders-Are-Nifty.html
+
+
+Texture2D<float4> rgb_in; // intensity 1
+
+//resolution of the cameras
+float4 res;//resolution of both IRCameras & ir emitter
+
+//storing of vertical position here... also a mask
+RWTexture2D<float4> rgb_out;
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    if(id.x >= res.x || id.y >= res.y){
+        return;
+    }
+    
+    float4 rgb = rgb_in[id.xy];
+    
+    rgb.x = pow(rgb.x, 1.0 / 2.2);
+    rgb.y = pow(rgb.y, 1.0 / 2.2);
+    rgb.z = pow(rgb.z, 1.0 / 2.2);
+    rgb_out[id.xy] = rgb;
+}

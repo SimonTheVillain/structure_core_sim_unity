@@ -1,0 +1,45 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+//http://kylehalladay.com/blog/tutorial/2014/06/27/Compute-Shaders-Are-Nifty.html
+//
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+
+//local geometry in cam coordinate system (does not need to be RWTex)
+Texture2D<float4> pos; // intensity 1
+
+//resolution of the cameras
+float4 res;//resolution of both IRCameras & ir emitter
+
+
+float zNear;
+float zFar;
+
+
+float zToDepth(float z_b){
+    float z_n = -2.0f * z_b + 1.0f;
+    float z_e = 2.0f * zNear * zFar / (zFar + zNear - z_n * (zFar - zNear));
+    return z_e;
+}
+//storing of vertical position here... also a mask
+RWTexture2D<float4> gt;
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    if(id.x >= res.x || id.y >= res.y){
+        return;
+    }
+    
+    bool projectorShadow = false;
+    float depth = zToDepth(pos[id.xy].x);
+    
+   
+    gt[id.xy] = float4(depth, 0, 0, 1);
+    
+    //gt[id.xy] = float4(xf, float(projectorShadow) * 1.0 + float(isWithin) * 2.0, depth, 1);
+}

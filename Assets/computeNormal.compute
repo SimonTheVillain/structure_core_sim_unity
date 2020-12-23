@@ -1,0 +1,37 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// normal input
+Texture2D<float4> n; 
+
+//resolution of the cameras
+float4 res;
+
+float4x4 mat;
+
+//output of the correct normal
+RWTexture2D<float4> gt;
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    if(id.x >= res.x || id.y >= res.y){
+        return;
+    }
+    
+    bool projectorShadow = false;
+    float4 n_i = n[id.xy];
+    //gt[id.xy] = n_i;
+
+
+    //gamma correction again. But it somehow is the other way around. 
+    //(to see if this works calculate the median of the values when not transforming)
+    n_i.xyz = float3(pow(n_i.x, 1.0 / 2.2), pow(n_i.y, 1.0 / 2.2), pow(n_i.z, 1.0 / 2.2));//undo the inverse!? gamma!
+    n_i.w = 0;
+    n_i = n_i - float4(0.5, 0.5, 0.5, 0);
+   
+    gt[id.xy] = mul(mat, n_i) + float4(0.5,0.5,0.5, 1.0); 
+    //gt[id.xy] = float4(0.5, 0.5, 0.5, 1.0);
+}

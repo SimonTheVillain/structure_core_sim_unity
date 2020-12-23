@@ -6,7 +6,7 @@ using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.Rendering;
 using UnityEngine.Experimental.Rendering;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
+//using System.Runtime.Remoting.Messaging;
 using UnityTemplateProjects;
 
 public class StructureCore1 : MonoBehaviour

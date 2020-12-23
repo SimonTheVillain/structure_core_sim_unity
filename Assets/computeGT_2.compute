@@ -1,0 +1,137 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+//http://kylehalladay.com/blog/tutorial/2014/06/27/Compute-Shaders-Are-Nifty.html
+//
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+
+//local geometry in cam coordinate system (does not need to be RWTex)
+Texture2D<float4> z1;
+//Texture2D<float4> z2;
+Texture2D<float4> zP;
+
+float4x4 pose1toP;//transform from one camera to projector
+//transform from one camera to second
+//float4x4 pose1to2;
+
+//resolution of the cameras
+float4 resIR;//resolution of both IRCameras & ir emitter
+float focalIR;
+
+float4 resP;
+float focalP;
+
+float zNear;
+float zFar;
+
+float cutoff;
+
+float zToDepth(float z_b){
+    float z_n = -2.0f * z_b + 1.0f;
+    float z_e = 2.0f * zNear * zFar / (zFar + zNear - z_n * (zFar - zNear));
+    return z_e;
+}
+//storing of vertical position here... also a mask
+RWTexture2D<float4> gt;
+
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    if(id.x >= resIR.x || id.y >= resIR.y){
+        return;
+    }
+    
+    bool projectorShadow = false;
+    float depth = zToDepth(z1[id.xy]);
+    
+    if(depth > cutoff){
+        //gt[id.xy] = float4(0,1,depth,1);
+        //return;#TODO: put this back in!
+    }
+    float4 pI1 = 
+        float4(
+            depth * (id.x - resIR.x * 0.5f) / focalIR,
+            depth * (id.y - resIR.y * 0.5f) / focalIR,
+            depth,
+            1.0f);
+    
+    //***CALC DISPARITY TO PROJECTOR***    
+    float4  pP = mul(pose1toP,pI1);
+
+    float xf = pP.x * focalP / pP.z + resP.x * 0.5f; //pixel position within projector
+    float yf = pP.y * focalP / pP.z + resP.y * 0.5f; //--/--
+    
+    
+    bool isWithin = false;
+    float truth = xf/resP.x;//normalized pixel position in pattern projector.
+    
+    //if( xf > patternRect.x && xf < (patternRect.x+patternRect.z) &&
+    //    (res.w-yf) > patternRect.y && (res.w-yf) < (patternRect.y+patternRect.w)){//y is from bottom up
+    //    isWithin = true;
+    //}
+   
+    
+    //workaROUND rounding
+    xf = xf + 0.5f;
+    yf = yf + 0.5f;
+    uint2 p;
+    p.x = xf;
+    p.y = yf; 
+    
+    if(p.x >= resP.x || p.y >= resP.y || p.x<0 || p.y < 0){ 
+        projectorShadow = true;
+    }
+    
+    float depthP = zToDepth(zP[p].x);
+    
+    float delta = abs(depthP - pP.z);
+    if(delta > 0.01f*depthP){//2cm per meter should be sufficient
+        projectorShadow = true;
+    }
+    
+    
+    //gt[id.xy] = float4((xf - id.x) * 256.0f,0,0,1);
+    
+    /***CALC DISPARITY TO OTHER CAM***  
+    
+    bool cameraShadow = false;
+    float4 pI2 = mul(poseI1toI2,pI1);
+
+    f = projI.z;
+    xf = pI2.x * f / pI2.z + res.z * 0.5f; //res.x is for the sensor not the projector
+    yf = pI2.y * f / pI2.z + res.w * 0.5f; //res.y is for the sensor not the projector
+    
+    //workaROUND rounding
+    xf = xf + 0.5f;
+    yf = yf + 0.5f;
+    p.x = xf;
+    p.y = yf; 
+    
+
+    
+    float depthI2 = zToDepth(posI2[p].x);
+    delta = abs(depthI2 - pI2.z);
+    
+    
+    if(delta > 0.01f*depthP){//2cm per meter should be sufficient
+        cameraShadow = true;
+    }
+    */
+    
+    //gt[id.xy] = float4(-(xf - id.x) ,(float)projectorShadow,(float)cameraShadow,1);//(float) cameraShadow,(float)projectorShadow,1);
+        
+    float x_normalized = id.x / float(resIR.x);
+    if(truth < 0.0f){
+        //we are outside the boundaries for the sensor
+        //gt[id.xy] = float4(truth - x_normalized,1,depth,1);
+        //return;
+    }
+   
+    gt[id.xy] = float4(truth - x_normalized, float(projectorShadow) + float(isWithin) * 2.0, depth, 1);
+    //gt[id.xy] = float4(0.5, 0.5, 0.5, 1);
+    //gt[id.xy] = float4(xf, float(projectorShadow) * 1.0 + float(isWithin) * 2.0, depth, 1);
+}
