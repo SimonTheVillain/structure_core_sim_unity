@@ -292,58 +292,14 @@ public class StructureCore : MonoBehaviour
         volumes = FindObjectsOfType<CameraVolume>();
 
         resultGt =
-            new RenderTexture(widthIR, heightIR, 24, RenderTextureFormat.ARGBFloat,
+            new RenderTexture(camLeft.res.x, camLeft.res.y, 24, RenderTextureFormat.ARGBFloat,
                 RenderTextureReadWrite.Default)
             {
                 enableRandomWrite = true
             };
 
-        /*
-        SetupCamera(camL,intrinsicsLR,widthIR,heightIR);
-        SetupCamera(camR,intrinsicsLR,widthIR,heightIR);
-        SetupCamera(camP,intrinsicsP,widthProj,heightProj);
-        SetupProjector(projector,intrinsicsP,widthProj,heightProj);
         
-
-
-
-        resultGt = 
-            new RenderTexture(widthIR, heightIR, 24, RenderTextureFormat.ARGBFloat,
-                RenderTextureReadWrite.Default)
-            {
-                enableRandomWrite = true
-            };
-        readbackL = new Texture2D(widthIR, heightIR, TextureFormat.RGBAFloat, false);
-        readbackR = new Texture2D(widthIR, heightIR, TextureFormat.RGBAFloat, false);
-        readbackP = new Texture2D(widthProj, heightProj, TextureFormat.RGBAFloat, false);
-        
-        tempRT_I = new RenderTexture(widthIR, heightIR, 24, RenderTextureFormat.ARGBFloat,
-            RenderTextureReadWrite.Default);
-        tempRT_P = new RenderTexture(widthProj, heightProj, 24, RenderTextureFormat.ARGBFloat,
-            RenderTextureReadWrite.Default);
-        
-        readbackLHandle = RTHandles.Alloc(widthIR, heightIR,1,DepthBits.None,GraphicsFormat.R32G32B32A32_SFloat);
-        readbackRHandle = RTHandles.Alloc(widthIR, heightIR,1,DepthBits.None,GraphicsFormat.R32G32B32A32_SFloat);
-        readbackPHandle = RTHandles.Alloc(widthProj, heightProj,1,DepthBits.None,GraphicsFormat.R32G32B32A32_SFloat);
-    */
     }
-    /*
-    void SetupCamera(Camera cam, Vector4 intrinsics,int width,int height)
-    {
-        float aspect = (float)width / height;
-        cam.aspect = aspect;
-        //field of view in degree
-        cam.fieldOfView = Mathf.Rad2Deg * Mathf.Atan((float) height * 0.5f / intrinsics.z)*2.0f;
-
-        //cam.fieldOfView;
-    }
-
-    void SetupProjector(Light light, Vector4 intrinsics,int width,int height)
-    {
-        simpleCameraController = GetComponent<SimpleCameraController>();
-        light.spotAngle = Mathf.Rad2Deg * Mathf.Atan((float) height*width/height * 0.5f / intrinsics.z) * 2.0f;// * Mathf.Sqrt(2.0f);
-    }
-    */
     void SetupProjector()
     {
         projector.cookie = patternTexture;
@@ -490,7 +446,7 @@ public class StructureCore : MonoBehaviour
         Texture2D depthRight = camRight.CaptureDepth();
 
         Texture2D depthProjector = camProjector.CaptureDepth();
-        StoreAs(depthLeft, screenshotPath + "/" + count + "_left_debug.exr", true);
+        //StoreAs(depthLeft, screenshotPath + "/" + count + "_left_debug.exr", true);
 
         
         Matrix4x4 poseLtoP = //transform from camera to projector
@@ -513,66 +469,6 @@ public class StructureCore : MonoBehaviour
             resultGt);
         StoreAs(resultGt, screenshotPath + "/" + count + "_right_gt.exr", true);
 
-        
-
-
-        //TODO: generate groundtruth and such!!!!
-        //GenGT();
-
-        //store the rendertextures of each camera.
-        //StoreAs(camL.targetTexture,screenshotPath + "/" + count + "_l.png",false);
-        //StoreAs(camR.targetTexture,screenshotPath + "/" + count + "_r.png",false);
-        /*
-        StoreAs(camL.targetTexture,screenshotPath + "/" + count + "_l.exr",true);
-        StoreAs(camR.targetTexture,screenshotPath + "/" + count + "_r.exr",true);
-        StoreAs(camP.targetTexture,screenshotPath + "/" + count + "_p.png",false);
-        projector.cookie = maskTexture;
-        projector.intensity = projectorIntensityMask;
-        camL.Render();
-        camR.Render();
-        camP.Render();
-        StoreAs(camL.targetTexture, screenshotPath + "/" + count + "_l_w.exr", true);
-        StoreAs(camR.targetTexture, screenshotPath + "/" + count + "_r_w.exr", true);
-        StoreAs(camP.targetTexture, screenshotPath + "/" + count + "_p_w.png", false);
-        projector.gameObject.SetActive(false);
-        camL.Render();
-        camR.Render();
-        camP.Render();
-        StoreAs(camL.targetTexture, screenshotPath + "/" + count + "_l_wo.exr", true);
-        StoreAs(camR.targetTexture, screenshotPath + "/" + count + "_r_wo.exr", true);
-        StoreAs(camP.targetTexture, screenshotPath + "/" + count + "_p_wo.png", false);
-
-        //cleanup
-        projector.gameObject.SetActive(true);
-        projector.cookie = patternTexture;
-        projector.intensity = projectorIntensitySpecles;
-
-
-
-        //render albedo via AOV
-        ReadDepth(camL, widthIR, heightIR,readbackL,tempRT_I,readbackLHandle);
-        ReadDepth(camR, widthIR, heightIR,readbackR,tempRT_I,readbackRHandle);
-        ReadDepth(camP, widthProj, heightProj,readbackP,tempRT_P,readbackPHandle);
-        //StoreAs(test,screenshotPath + "/" + count +"_depth.png",false);
-        //CheckFloatValues(posL);
-        
-        Matrix4x4 poseLtoP = //transform from camera to projector
-            camP.transform.worldToLocalMatrix * camL.transform.localToWorldMatrix;
-        Matrix4x4 poseLtoR = //transform from camera to projector
-            camR.transform.worldToLocalMatrix * camL.transform.localToWorldMatrix;
-        GenGT(readbackL, poseLtoP,poseLtoR, readbackP,readbackR,resultGt);
-        StoreAs(resultGt,screenshotPath + "/" + count +"_gt_l.exr",true);
-        
-        Matrix4x4 posRtoP = 
-            camP.transform.worldToLocalMatrix * camR.transform.localToWorldMatrix;
-        Matrix4x4 posRtoL = 
-            camL.transform.worldToLocalMatrix * camR.transform.localToWorldMatrix;
-        GenGT(readbackR, posRtoP, posRtoL,readbackP,readbackL,resultGt);
-        StoreAs(resultGt,screenshotPath + "/" + count +"_gt_r.exr",true);
-        //StoreAs(gt,screenshotPath + "/" + count +"_gt_r.png",false);
-
-        */
-
         count++;
 
         if (count > stop_count)
@@ -586,162 +482,6 @@ public class StructureCore : MonoBehaviour
 
     }
     
-    /*
-    private List<Material> matOrig;
-    void SetReplacementMaterial()
-    {
-        matOrig = new List<Material>();
-        Renderer[] renderers = FindObjectsOfType<Renderer>();
-        for(int i = 0; i < renderers.Length; i++)
-        {
-            Material[] materials = renderers[i].materials;
-            for (int j = 0; j < renderers[i].materials.Length; j++)
-            {
-                matOrig.Add(renderers[i].materials[j]);
-                materials[j] = locPosMat;
-            }
-
-            renderers[i].materials = materials;
-        }
-    }
-    void UnsetReplacementMaterial()
-    {
-        Renderer[] renderers = FindObjectsOfType<Renderer>();
-        int k = 0;
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            //renderers[i].material = matOrig[k];
-            //k++;
-            Material[] materials = renderers[i].materials;
-            for (int j = 0; j < renderers[i].materials.Length; j++)
-            {
-                materials[j] = matOrig[k];
-                k++;
-            }
-
-            renderers[i].materials = materials;
-        }
-    }
-    */
-
-
-    /*
-    void ReadDepth(Camera c,int width,int height,Texture2D readbackTexture,RenderTexture m_TempRT,RTHandle readbackTextureHandle)
-    {
-        HDAdditionalCameraData hdacd = c.GetComponent<HDAdditionalCameraData>();
-        //hdacd.
-
-        /// SETUP AOV
-        var pipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
-
-        //Texture2D readbackTexture = new Texture2D(width, height, TextureFormat.RGBAFloat, false);
-
-        var aovRequest = new AOVRequest(AOVRequest.NewDefault());
-        
-        aovRequest.SetFullscreenOutput(DebugFullScreen.Depth);
-        var aovBuffer = AOVBuffers.DepthStencil;
-        //obviously m_colorRT is not set here
-        //var bufAlloc = m_ColorRT ?? (m_ColorRT = RTHandles.Alloc(sce.widthIR, sce.heightIR));
-        //RTHandleSystem.RTHandle ColorRT = RTHandles.Alloc(width, height,1,DepthBits.None,GraphicsFormat.R32G32B32A32_SFloat);
-        RTHandle ColorRT = readbackTextureHandle;
-
-        var aovRequestBuilder = new AOVRequestBuilder();
-        aovRequestBuilder.Add(aovRequest,
-            bufferId => ColorRT,
-            null,
-            new[] { aovBuffer },
-            (cmd, textures, properties) =>
-            {
-                if (m_TempRT != null)
-                {
-                    cmd.Blit(textures[0], m_TempRT);
-                }
-            });
-        var aovRequestDataCollection = aovRequestBuilder.Build();
-        var previousRequests = hdacd.aovRequests;
-        //print("wtf");
-
-        if (previousRequests != null && previousRequests.Any())
-        {
-            //print("oh shit");
-            var listOfRequests = previousRequests.ToList();
-            foreach (var p in aovRequestDataCollection)
-            {
-                listOfRequests.Add(p);
-            }
-            var allRequests = new AOVRequestDataCollection(listOfRequests);
-            hdacd.SetAOVRequests(allRequests);
-        }
-        else
-        {
-            hdacd.SetAOVRequests(aovRequestDataCollection);
-        }
-
-
-        //****************************************************RENDER and READBACK**************
-
-        print("rendering and storing");
-        //sce.irLeft.targetTexture = outputRT;
-        Rect old = c.rect;
-        c.rect = new Rect(0, 0, 1, 1);
-        //SetReplacementMaterial();
-        c.Render();
-        //UnsetReplacementMaterial();
-        c.rect = old;
-        //sce.irLeft.targetTexture = null;
-
-        RenderTexture.active = m_TempRT; // outputRT
-        readbackTexture.ReadPixels(new Rect(0, 0, width, height), 0, 0, false);
-        readbackTexture.Apply();
-        RenderTexture.active = null;
-        //StoreAs(readbackTexture, screenshotPath + "/testitest.png", false);
-
-
-
-
-
-        //*****************************************************READ*************
-
-
-
-        //**********************************************UNDO SETUP****************************
-        //print("removing");
-        hdacd.SetAOVRequests(null);
-        //c.targetTexture = null;
-        //return readbackTexture;
-
-    }
-    */
-    /*
-    void GenGT(Texture2D posI1, Matrix4x4 poseI1toP,Matrix4x4 poseI1toI2,Texture2D posP,Texture2D posI2,RenderTexture result)
-    {
-        int kernelHandle = computeShader.FindKernel("CSMain");
-        result.Create();
-        //print("projC" + intrinsicsLR);
-        //print("projP" + intrinsicsP);
-        computeShader.SetVector("res",new Vector4(posI1.width,posI1.height,posP.width,posP.height));
-        computeShader.SetVector("projI",intrinsicsLR);
-        computeShader.SetVector("projP",intrinsicsP);
-        computeShader.SetVector("patternRect",new Vector4(
-            patternRect.xMin,patternRect.yMin,patternRect.width,patternRect.height));
-        computeShader.SetMatrix("poseI1toP",poseI1toP);
-        computeShader.SetMatrix("poseI1toI2",poseI1toI2);
-
-        computeShader.SetFloat("zNear", zNear);
-        computeShader.SetFloat("zFar",zFar);
-        computeShader.SetFloat("cutoff",cutoff);
-        computeShader.SetTexture(kernelHandle,"posI1",posI1);
-        computeShader.SetTexture(kernelHandle,"posI2",posI2);
-        computeShader.SetTexture(kernelHandle,"posP",posP);
-        computeShader.SetTexture(kernelHandle, "gt", result);
-        
-        computeShader.Dispatch(kernelHandle, posI1.width/8 + 1, posI1.height/8 + 1, 1);
-
-        //StoreAs(result,screenshotPath + "/" + count +"_result.png",false);
-        //return result;
-
-    }
-    */
 
     void GenGT(Texture2D z1, Texture2D zP, 
         float fIR, float fP, 
@@ -750,16 +490,7 @@ public class StructureCore : MonoBehaviour
         Vector2Int resIR = new Vector2Int(z1.width, z1.height);
         Vector2Int resP = new Vector2Int(zP.width, zP.height);
         int kernelHandle = computeShaderGroundtruth.FindKernel("CSMain");
-        /*
-        print(resIR);
-        print(fIR);
-        print(resP);
-        print(fP);
-        print(pose1toP);
-        print(zNear);
-        print(zFar);
-        print(cutoff);
-        */
+        
         computeShaderGroundtruth.SetVector("resIR", new Vector2(resIR.x, resIR.y));
         computeShaderGroundtruth.SetFloat("focalIR", fIR);
 
