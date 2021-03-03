@@ -93,6 +93,7 @@ public class StructureCore : MonoBehaviour
 
             //AOVBuffers.DepthStencil;
             //AOVGType.Depth;
+            //add a request for the normal texture
             var aovRequestBuilder = new AOVRequestBuilder();
             aovRequestBuilder.Add(aovRequest,
                 bufferId => readbackHandle,
@@ -128,7 +129,7 @@ public class StructureCore : MonoBehaviour
 
             if (previousRequests != null && previousRequests.Any())
             {
-                print("we have to add a new request to an existing list!!!");
+                //print("we have to add a new request to an existing list!!!");
                 var listOfRequests = previousRequests.ToList();
                 foreach (var p in aovRequestDataCollection)
                 {
@@ -139,7 +140,7 @@ public class StructureCore : MonoBehaviour
             }
             else
             {
-                print("completely new AOV request");
+                //print("completely new AOV request");
                 hdacd.SetAOVRequests(aovRequestDataCollection);
             }
         }
@@ -160,6 +161,11 @@ public class StructureCore : MonoBehaviour
         {
             TransformColor(cam.targetTexture, result_rgb);
             return result_rgb;
+        }
+
+        public RenderTexture CaptureRawColor()
+        {
+            return cam.targetTexture;
         }
         public RenderTexture CaptureNormals()
         {
@@ -201,6 +207,12 @@ public class StructureCore : MonoBehaviour
             computeShaderGamma.Dispatch(kernelHandle, rgb.width / 8 + 1, rgb.height / 8 + 1, 1);
 
         }
+        public void SetVolumeLayerMask(LayerMask mask)
+        {
+            cam.GetComponent<HDAdditionalCameraData>().volumeLayerMask = mask;
+        }
+
+        
 
         private RenderTexture rtCam;
         private RenderTexture tempRT_depth;
@@ -235,18 +247,20 @@ public class StructureCore : MonoBehaviour
     public float zNear;
     public float zFar;
     public float cutoff = 20.0f;
-    public int count = 0;
+    public int imageCount = 0;
     public int stop_count = 100000;
 
+    public LayerMask postProcessingMaskFull;
+    public LayerMask postProcessingMaskManual;
 
 
     public int heightIR;
     public int widthIR;
     public int heightProj;
     public int widthProj;
-    public Camera camL;
-    public Camera camR;
-    public Camera camP;
+    //public Camera camL;
+    //public Camera camR;
+    //public Camera camP;
 
     public Light projector;
     public Texture2D patternTexture;
@@ -258,29 +272,29 @@ public class StructureCore : MonoBehaviour
     public Vector4 intrinsicsLR;
     public Vector4 intrinsicsP;
 
-    public ComputeShader computeShader;
+    //public ComputeShader computeShader;
 
-    public Material locPosMat;
-
-
+    //public Material locPosMat;
 
 
 
 
-    public Rect patternRect;
+
+
+    //public Rect patternRect;
 
 
 
-    public bool autocaptureMode = false;
+   // public bool autocaptureMode = false;
 
     private CameraVolume[] volumes;
 
     private RenderTexture resultGt;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-
         camLeft.Setup(zNear, zFar);
         camRight.Setup(zNear, zFar);
         camProjector = new CamCollector();
@@ -311,33 +325,84 @@ public class StructureCore : MonoBehaviour
 
     //private int countdown = 30;
     // Update is called once per frame
-    bool firstFrame = true;
+    //bool firstFrame = true;
+
+    int state = 0;
+    public int waitAutoExposure = 5; //wait some frames for autoexposure to kick in
+    int waitCycle = 0;
     void Update()
     {
-        if (firstFrame)
+        switch (state)
         {
-            firstFrame = false;
-            return;
-        }
-        /*
-        countdown--;
-        if (countdown == 0)
-        {
-            StartCoroutine(CollectFrames());
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            print("this is it! we capture something");
-            StartCoroutine(CollectFrames());
-        }
-        */
+            case 0:
+                //first frame
+                //TODO: enable dot-pattern projector
+                projector.enabled = true;
+                projector.cookie = patternTexture;
+                //TODO: enable auto exposure
+                camLeft.SetVolumeLayerMask(postProcessingMaskFull);
+                camRight.SetVolumeLayerMask(postProcessingMaskFull);
 
-        //return;
-        CollectFrameNow();
+                state++;
+                break;
+            case 1:
+                //collect frame with activated dot-pattern projector and so on!
+                CollectPatternFrameNow();
+                //TODO: disable projector
+                projector.enabled = false;
+                //TODO: disable auto exposure
+                camLeft.SetVolumeLayerMask(postProcessingMaskManual);
+                camRight.SetVolumeLayerMask(postProcessingMaskManual);
+                state++;
+                break;
+            case 2:
+                //collect frame with deactivated dot-pattern projector
+                CollectColorExr("noproj");
+                //TODO: setup projector to produce dot-pattern mask image!
+                projector.enabled = true;
+                projector.cookie = maskTexture;
+                state++;
+                break;
+            case 3:
+                //collect frame with dot-pattern mask 
+                CollectColorExr("msk");
+                //TODO: setupt projector to produce dot-pattern
+                projector.cookie = patternTexture;
+                //TODO: enable auto exposure
+                camLeft.SetVolumeLayerMask(postProcessingMaskFull);
+                camRight.SetVolumeLayerMask(postProcessingMaskFull);
+                //TODO: flip assets, texture, camera pose
+                CameraJump();
+                GetComponent<FloatingObjectManager>().Flip();
+                FlipTextures();
+                state++;
+                waitCycle = 0;
+                imageCount++;
+                if (imageCount > stop_count)
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+                }
+                break;
+            case 4:
+                //wait for auto-exposure to adapt to new conditions
+                waitCycle++;
+                if(waitCycle >= waitAutoExposure)
+                {
+                    state = 1;
+                }
+                break;
 
-        //HDAdditionalCameraData add = camL.GetComponent<HDAdditionalCameraData>()
+
+        }
        
+    }
 
+    void CameraJump()
+    {
         float volume = 0.0f;
         for (int i = 0; i < volumes.Length; i++)
         {
@@ -428,21 +493,21 @@ public class StructureCore : MonoBehaviour
     }
 
 
-    void CollectFrameNow()
+    void CollectPatternFrameNow()
     {
 
         RenderTexture color = camLeft.CaptureColor();
-        StoreAs(color, screenshotPath + "/" + count + "_left.png", false);
+        StoreAs(color, screenshotPath + "/" + imageCount + "_left.png", false);
        
         RenderTexture normals = camLeft.CaptureNormals();
-        StoreAs(normals, screenshotPath + "/" + count + "_left_n.png", false);
+        StoreAs(normals, screenshotPath + "/" + imageCount + "_left_n.png", false);
         Texture2D depthLeft = camLeft.CaptureDepth();
 
 
         color = camRight.CaptureColor();
-        StoreAs(color, screenshotPath + "/" + count + "_right.png", false);
+        StoreAs(color, screenshotPath + "/" + imageCount + "_right.png", false);
         normals = camRight.CaptureNormals();
-        StoreAs(normals, screenshotPath + "/" + count + "_right_n.png", false);
+        StoreAs(normals, screenshotPath + "/" + imageCount + "_right_n.png", false);
         Texture2D depthRight = camRight.CaptureDepth();
 
         Texture2D depthProjector = camProjector.CaptureDepth();
@@ -457,7 +522,7 @@ public class StructureCore : MonoBehaviour
             camProjector.f,
             poseLtoP,
             resultGt);
-        StoreAs(resultGt, screenshotPath + "/" + count + "_left_gt.exr", true);
+        StoreAs(resultGt, screenshotPath + "/" + imageCount + "_left_gt.exr", true);
         
         Matrix4x4 poseRtoP =
             camProjector.cam.transform.worldToLocalMatrix * 
@@ -467,21 +532,22 @@ public class StructureCore : MonoBehaviour
             camProjector.f,
             poseRtoP,
             resultGt);
-        StoreAs(resultGt, screenshotPath + "/" + count + "_right_gt.exr", true);
-
-        count++;
-
-        if (count > stop_count)
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
-        }
+        StoreAs(resultGt, screenshotPath + "/" + imageCount + "_right_gt.exr", true);
 
     }
-    
+    void CollectColorExr(string flag)
+    {
+
+        RenderTexture color = camLeft.CaptureRawColor();
+        StoreAs(color, screenshotPath + "/" + imageCount + "_left_" + flag + ".exr", true);
+
+        color = camRight.CaptureRawColor();
+        StoreAs(color, screenshotPath + "/" + imageCount + "_right_" + flag + ".exr", true);
+
+    }
+
+
+
 
     void GenGT(Texture2D z1, Texture2D zP, 
         float fIR, float fP, 
@@ -512,6 +578,16 @@ public class StructureCore : MonoBehaviour
 
         computeShaderGroundtruth.Dispatch(kernelHandle, resIR.x / 8 + 1, resIR.y / 8 + 1, 1);
 
+
+    }
+
+    void FlipTextures()
+    {
+        TextureFlipper[] flippers = GameObject.FindObjectsOfType<TextureFlipper>();
+        foreach(TextureFlipper flipper in flippers)
+        {
+            flipper.flip();
+        }
 
     }
 

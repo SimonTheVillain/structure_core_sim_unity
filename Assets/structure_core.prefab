@@ -139,7 +139,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 0
   SMAAQuality: 2
@@ -216,7 +216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6198338251687301504}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.05406, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6198338252235162892}
@@ -337,7 +337,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 0
   SMAAQuality: 2
@@ -365,7 +365,7 @@ MonoBehaviour:
   invertFaceCulling: 0
   probeLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   hasPersistentHistory: 0
   exposureTarget: {fileID: 0}
   m_RenderingPathCustomFrameSettings:
@@ -526,7 +526,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 0
   SMAAQuality: 2
@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 6198338252235162892}
   - component: {fileID: 6198338252235162893}
   - component: {fileID: 6198338252235162890}
+  - component: {fileID: 8525513069473207917}
   m_Layer: 0
   m_Name: structure_core
   m_TagString: Untagged
@@ -644,40 +645,31 @@ MonoBehaviour:
   focalProjector: 1700
   resProjector: 2048
   screenshotPath: /home/simon/datasets/structure_core_unity
-  patternTexture: {fileID: 2800000, guid: 1162e152dcab8c840b4b6a4dba5893eb, type: 3}
-  maskTexture: {fileID: 2800000, guid: ffbc09450fa772748bbbdb37264e85aa, type: 3}
   computeShaderGroundtruth: {fileID: 7200000, guid: 19e976dff204e7445b7a6cd38135b214,
     type: 3}
   zNear: 0.3
   zFar: 1000
   cutoff: 50
-  count: 0
+  imageCount: 0
   stop_count: 100000
+  postProcessingMaskFull:
+    serializedVersion: 2
+    m_Bits: 256
+  postProcessingMaskManual:
+    serializedVersion: 2
+    m_Bits: 512
   heightIR: 896
   widthIR: 1216
   heightProj: 960
   widthProj: 1280
-  camL: {fileID: 6198338251392268697}
-  camR: {fileID: 6198338252226430473}
-  camP: {fileID: 6198338252443129381}
   projector: {fileID: 6198338252454193889}
-  intrinsicsLR: {x: 604, y: 457, z: 1115.44, w: 1115.44}
-  intrinsicsP: {x: 1024, y: 1024, z: 950, w: 1115.44}
-  computeShader: {fileID: 7200000, guid: 3bcf543b1d1e70ab396413bb710d1993, type: 3}
-  locPosMat: {fileID: 2100000, guid: 5e2d9d0850fce62358d343f5f1de956d, type: 2}
-  patternRect:
-    serializedVersion: 2
-    x: 28
-    y: 21
-    width: 1223
-    height: 901
-  autocaptureMode: 0
+  patternTexture: {fileID: 2800000, guid: 1162e152dcab8c840b4b6a4dba5893eb, type: 3}
+  maskTexture: {fileID: 2800000, guid: ffbc09450fa772748bbbdb37264e85aa, type: 3}
   projectorIntensitySpecles: 1200000
   projectorIntensityMask: 600000
-  leftSS: {fileID: 0}
-  left: {fileID: 0}
-  rightSS: {fileID: 0}
-  right: {fileID: 0}
+  intrinsicsLR: {x: 604, y: 457, z: 1115.44, w: 1115.44}
+  intrinsicsP: {x: 1024, y: 1024, z: 950, w: 1115.44}
+  waitAutoExposure: 5
 --- !u!114 &6198338252235162890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +677,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6198338252235162895}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8a636f62116c0a40bbfefdf876d4608, type: 3}
   m_Name: 
@@ -718,6 +710,20 @@ MonoBehaviour:
     m_RotationOrder: 4
   rotationLerpTime: 0.01
   invertY: 0
+--- !u!114 &8525513069473207917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198338252235162895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7567aa339521bd148a2b27acf08e633c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectList: {fileID: 11400000, guid: 17b8fa72c585037478aa95aca619b55c, type: 2}
+  simultaneousObjects: 100
 --- !u!1 &6198338252443129369
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,7 +750,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6198338252443129369}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01161, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0634, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6198338252454193890}
@@ -858,7 +864,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 0
   SMAAQuality: 2

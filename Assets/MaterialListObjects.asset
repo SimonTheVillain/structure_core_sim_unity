@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d61c8e25667a624fa1c07d79ee37567, type: 3}
+  m_Name: MaterialListObjects
+  m_EditorClassIdentifier: 
+  materials:
+  - material: {fileID: 2100000, guid: fddbd5253c07b6a4aa20b98d3a44c48f, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: ed28fa9c23490a8e1b3ada915ee8d27b, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 5e9acf077d725fd43a806d3d156e4441, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 8660db8c87b3a639590072c7094baa80, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 1759274671034575a8e50f4b3eb10058, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 8cd79c5439d592b909b8ed57df7bbdee, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 8f15848587714fcc6a9c3f58af2c3f00, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 48301bb95adbd008e9e5dff83fe76cb0, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: ded74a8f92854768ea38c39470988bc7, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 071f2e8c62df9ca74822d4d4d11964eb, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 24e2556ee1e75631e87800bfbb20beea, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: a68228c24abfa2f4b8954d7b0148f799, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: 9b8eadc4de0544646b75ddcc43f8fd06, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1
+  - material: {fileID: 2100000, guid: bd2d742ee2ce7a740ae0cf992a38be74, type: 2}
+    minMaxScale: {x: 0.1, y: 10}
+    relativeProbability: 1

@@ -1,0 +1,410 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a8cc15efe2fe444b8fdde18fe2c42f, type: 3}
+  m_Name: FloatingObjects
+  m_EditorClassIdentifier: 
+  objects:
+  - prefab: {fileID: 2784035899410218737, guid: 6fed23a87ce7a29439ed041ed8f7ba28,
+      type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 10
+  - prefab: {fileID: 7811375223272555576, guid: 38dac0233ea14a743ae62aca4421e3cd,
+      type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 10
+  - prefab: {fileID: 3901407706024164876, guid: 9e738d0a799b4b348a06114ec0a9c239,
+      type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 10
+  - prefab: {fileID: 6028514064782088474, guid: f4555c5d6bea64b4fad89486bbc8a3e2,
+      type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 10
+  - prefab: {fileID: 1237680282725772, guid: ffd43e9e2647d674a8abcae38483115e, type: 3}
+    minMaxDist: {x: 0.5, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1586879550464318, guid: 9f2d560872a335d4aa0b501fc4bef746, type: 3}
+    minMaxDist: {x: 1, y: 3}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1557741965443894, guid: 10a4b7b1359186d449f593c3f853f7dc, type: 3}
+    minMaxDist: {x: 1, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1073771096134606, guid: d347d24ae24134546924e5d62d18a270, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1698738104575242, guid: 6b97ddfa5d6f8b246af44ace27347bdc, type: 3}
+    minMaxDist: {x: 2, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1613722985377998, guid: a3a114b7ef17d1340a401ea95013f347, type: 3}
+    minMaxDist: {x: 2, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1451782474758208, guid: 605122a33f111fd4f9bedf9b3512b7c4, type: 3}
+    minMaxDist: {x: 2, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1826851456360696, guid: 20d3dde8cb6caa949ae3dd226db73e29, type: 3}
+    minMaxDist: {x: 2, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1126028071248624, guid: cdcdf409a1ad5814cba2e03a2762ec7a, type: 3}
+    minMaxDist: {x: 1, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1067426457054484, guid: 01c75f40b9778e44294085a772b5071b, type: 3}
+    minMaxDist: {x: 1, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1017629247702918, guid: 496c96cf27292e343b163d7cedb852b0, type: 3}
+    minMaxDist: {x: 3, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1267746800574586, guid: d3425841044ac5a4fabdf7d7efc79b71, type: 3}
+    minMaxDist: {x: 3, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1501233006630890, guid: 67c11decbdb27b64aae99e48b91316f1, type: 3}
+    minMaxDist: {x: 3, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1917234172640532, guid: ea936102b1c382948b870e97e93d2163, type: 3}
+    minMaxDist: {x: 3, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1604699191849480, guid: 9755affdab01d244c847c9ed27560876, type: 3}
+    minMaxDist: {x: 0.5, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1380472176649076, guid: 830cbf92a4739064d827c02442f2323e, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1067051383327214, guid: 84173c970a3c0cd47826e6b4368dc903, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1872655638982954, guid: 8a4a15d25451a92469d66ee0e56d820e, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1193804665522800, guid: 04cc30b424fd1844890712af6f7fe514, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1525506731370778, guid: 3e930b5ae71558847974e723376416f8, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1423278281875770, guid: 0aa99fc3adf76594eb67d1475a311328, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1491384738140120, guid: 73ab2dbbaaae2ee4f83fa42dfc773471, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1581218376242852, guid: 06d823bc73e6e5e4f931c3f42db2b906, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1594528109603708, guid: 3a093adb7d50ddd409a07ac10323120d, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1763530909158144, guid: fe7ec3b45ebffbe46a6607a6a507a5b8, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1148479658287936, guid: 074e19c9c4151f144bff5ad5f8ae2d23, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1455982900721268, guid: 3aa561ff41db2094da7e4184c409b868, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 100000, guid: 23d99ecdf0740f24aaff4e4505369453, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1245856788164994, guid: ab6797f9424804a479af1b2420f1e971, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1844984920030592, guid: 33c41f1244abbac408f332d049fb552a, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1984184985514828, guid: 45085e3c88309294697d50880d3411fe, type: 3}
+    minMaxDist: {x: 4, y: 8}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1612403959344154, guid: 1ff9ecc60307eb64690d9ab2b725be36, type: 3}
+    minMaxDist: {x: 4, y: 8}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1945188953111148, guid: 056374d4a4e8d1a458d1853aae96dba7, type: 3}
+    minMaxDist: {x: 4, y: 8}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1016436002611844, guid: 623556a2e8ee71e4fa3cbe73c6be49d6, type: 3}
+    minMaxDist: {x: 4, y: 8}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1945872742168854, guid: 33d8bb24c3a6e6e40b1b004b27f18d34, type: 3}
+    minMaxDist: {x: 4, y: 8}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1758041348806450, guid: 2e05038adc96e6549b82db939cde341d, type: 3}
+    minMaxDist: {x: 4, y: 8}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1626472809896912, guid: e73ea3d6c1c7a174d90610d74b85220d, type: 3}
+    minMaxDist: {x: 2, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1592828776644416, guid: a2d917c03ec2a8f4fa1f6b552a34aa0f, type: 3}
+    minMaxDist: {x: 2, y: 6}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1035700703460596, guid: f0190191b0169cb4daf524f846886205, type: 3}
+    minMaxDist: {x: 0.7, y: 3}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1195781256390606, guid: fcf06ec46d0005b4db19264b4f26b166, type: 3}
+    minMaxDist: {x: 1, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1268636657800604, guid: cfe19d9e308fd5a4085266dbdb2316a9, type: 3}
+    minMaxDist: {x: 1, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1561596265384014, guid: 72483585f7bf50244b39a9bf2af009eb, type: 3}
+    minMaxDist: {x: 1, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1459506974456422, guid: 179d7f984df2d8e4fb2a3adad779b359, type: 3}
+    minMaxDist: {x: 1, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1493361667712518, guid: e8ff5cda4a951cc498ae6b8e2bee5196, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1332674051264792, guid: 4ad7485c4f8323c46b22ef419c57a57f, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1320225136147034, guid: dcf6c723c76e2914680a80e0760a52fd, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1526322879836596, guid: 01705859266d9d4469daf02463c40a3c, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1246519221873566, guid: 5d45a0342bc5f6747a5c251521994cb2, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1591941904930906, guid: 8b51d6c71e08538439e9cf437e26baad, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1966290377642824, guid: fbc45019eb4a66346a60487055ce0061, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1349494475060088, guid: 65d7a95a2bafba14eb74dfc0c1284f72, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1194389473328092, guid: bec9bae6e89e0e741bfc3bbcc8d6accd, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1101985510663456, guid: 5dd0eb54d4b9e3e49a5d28f03311f8ac, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1953410116667210, guid: a866879c23c350c43807e9106fc2138d, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1337857268562430, guid: e3fec3c22d8df784fa33a336e5f0fdc2, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1740199817545134, guid: f6b1952a1a2375e4f8be5c44d6ec2f2a, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1728117368571048, guid: 7ee2f4822e69f8d45b4208dc7fd37f95, type: 3}
+    minMaxDist: {x: 3, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1284514991859662, guid: 0126718f6c636164198c902255696f02, type: 3}
+    minMaxDist: {x: 1, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1501119746112072, guid: e08a740808a271b4fb40a6609ee512fc, type: 3}
+    minMaxDist: {x: 1, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1081779614371078, guid: e3d34be79692ce4468812aa97bacfbdf, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1431026562784590, guid: 33af66193c40f16409760a479c4d1a55, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1610907024165542, guid: 1906213e749fefb4ebea8c388ae05b25, type: 3}
+    minMaxDist: {x: 2, y: 7}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1841476726293430, guid: be8885c12a0d72d49b120b5269f56109, type: 3}
+    minMaxDist: {x: 4, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1879919383078682, guid: 35842ccafedceef488882a9fa2694c2f, type: 3}
+    minMaxDist: {x: 4, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1720162801431898, guid: a780a2cd0d4968346a8915fd497c716f, type: 3}
+    minMaxDist: {x: 4, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1091183577943424, guid: 25b7095a6df049c468ca6e5ca2d63af4, type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1693652475381138, guid: 7c3ac8817f72a84418d0dbc9d86ff558, type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1932423239913870, guid: 59c9c077ac0267c449100685572d065e, type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1928817022522560, guid: b1c29756dcdab7a42ad433895228a686, type: 3}
+    minMaxDist: {x: 1, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1599190614124324, guid: b396c457dd4b0394195e84aa735070aa, type: 3}
+    minMaxDist: {x: 1, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1326132024403396, guid: ce81f58258718ca4eb7e1caf0ec8682c, type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1036561900474668, guid: 37f5129535a6a544ab2b94198a1ad07e, type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1957068390711666, guid: bf3750b409daed846a2c5794dd58fe38, type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1438842666875530, guid: 0bb8935f270bc82409e8968ac666808d, type: 3}
+    minMaxDist: {x: 3, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1837014212568836, guid: 109f6dabbb345c140825bec3d582a353, type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1218764783453542, guid: 8ab5bddaaa63e6c4eae6e54e2b4cbdc2, type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1641932774482916, guid: 93e2525d24f56a44c89cdf3a4b1084f3, type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1956717255741930, guid: 9a6480ce849e36145ac00716fe6d13f1, type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1221247941980460, guid: 35adc4c38b292794da4d30f9edd476dd, type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 4844435954979709924, guid: e3b5014f08dbd6247afd527ec522767f,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 3376081647686697029, guid: f72bbe6ae4f84ec4b823c30485fc8d31,
+      type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 8032527229613527615, guid: b50e8f7975b2665469b723f5aa9a9f95,
+      type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 3889568649429370945, guid: 92efe95713abd7b448c28ff02a569d12,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 2056961024699697253, guid: d8217509d1b695c42bf5430ba70d192c,
+      type: 3}
+    minMaxDist: {x: 2, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1176193102086917861, guid: 7f4bcb947fab393439694a44110f3741,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 6436363986092645244, guid: ecca845bd2e606a45a8124fab82ae48b,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 4786214422997424213, guid: 36d1b8938dbfa3340938d615cca08cc3,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1395370073971007429, guid: c852964ba1ade7c4d8aeefbc99413e6f,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 1457720875465969154, guid: 248c539c229b5754d81e391bf0dea543,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 4087551421225804611, guid: 667d80086c927e14f931d6278192e5d7,
+      type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
+  - prefab: {fileID: 100000, guid: 36ed72df9b6f5de45819a1f02a1f034b, type: 3}
+    minMaxDist: {x: 0.5, y: 9}
+    minMaxScale: {x: 0.5, y: 1.5}
+    relativeProbability: 1
