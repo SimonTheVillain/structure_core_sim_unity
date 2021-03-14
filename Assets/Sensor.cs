@@ -9,7 +9,7 @@ using System.Linq;
 //using System.Runtime.Remoting.Messaging;
 using UnityTemplateProjects;
 using UnityEngine.Profiling;
-using UnityEditor.Recorder;
+//using UnityEditor.Recorder;
 using System;
 using UnityEditor;
 
