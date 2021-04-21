@@ -642,8 +642,8 @@ MonoBehaviour:
     computeShaderGamma: {fileID: 7200000, guid: 1ec152bbb2856f64ca57a5e768028092,
       type: 3}
   cameraProjector: {fileID: 6198338252443129381}
-  focalProjector: 1700
-  resProjector: 2048
+  projectorScale: 2
+  resProjector: 3072
   screenshotPath: /home/simon/datasets/structure_core_unity
   computeShaderGroundtruth: {fileID: 7200000, guid: 19e976dff204e7445b7a6cd38135b214,
     type: 3}
@@ -658,17 +658,11 @@ MonoBehaviour:
   postProcessingMaskManual:
     serializedVersion: 2
     m_Bits: 512
-  heightIR: 896
-  widthIR: 1216
-  heightProj: 960
-  widthProj: 1280
   projector: {fileID: 6198338252454193889}
-  patternTexture: {fileID: 2800000, guid: 1162e152dcab8c840b4b6a4dba5893eb, type: 3}
-  maskTexture: {fileID: 2800000, guid: ffbc09450fa772748bbbdb37264e85aa, type: 3}
-  projectorIntensitySpecles: 1200000
+  patternTexture: {fileID: 2800000, guid: e4978b7494e177d4fbd78816eb2e1b1e, type: 3}
+  maskTexture: {fileID: 2800000, guid: 816abeefe5930194b8a0dd21a8079677, type: 3}
+  projectorIntensitySpecles: 12000000
   projectorIntensityMask: 600000
-  intrinsicsLR: {x: 604, y: 457, z: 1115.44, w: 1115.44}
-  intrinsicsP: {x: 1024, y: 1024, z: 950, w: 1115.44}
   waitAutoExposure: 5
 --- !u!114 &6198338252235162890
 MonoBehaviour:
@@ -958,7 +952,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 47746.48
+  m_Intensity: 23873.24
   m_Range: 10
   m_SpotAngle: 45
   m_InnerSpotAngle: 1
@@ -1028,7 +1022,7 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 1
   m_AreaLightShape: 0
-  m_Intensity: 600000
+  m_Intensity: 300000
   m_EnableSpotReflector: 0
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0

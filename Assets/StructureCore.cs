@@ -236,8 +236,15 @@ public class StructureCore : MonoBehaviour
     public CamCollector camRight;
     private CamCollector camProjector; // that one is needed for some occlusion estimation
     public Camera cameraProjector;
-    public float focalProjector=850*2;
-    public int resProjector = 1024*2;
+
+    //focal length of the projector is taken from the left camera
+    private float focalProjector=850*2;
+    
+    //the scale reflects the upsampled projector texture.
+    public float projectorScale = 2.0f;
+    //the actual size of the image used for the projector (should include scale)
+    public int resProjector = 1024*3;
+
     public string screenshotPath;
 
 
@@ -253,11 +260,6 @@ public class StructureCore : MonoBehaviour
     public LayerMask postProcessingMaskFull;
     public LayerMask postProcessingMaskManual;
 
-
-    public int heightIR;
-    public int widthIR;
-    public int heightProj;
-    public int widthProj;
     //public Camera camL;
     //public Camera camR;
     //public Camera camP;
@@ -268,9 +270,6 @@ public class StructureCore : MonoBehaviour
 
     public float projectorIntensitySpecles = 1200000;
     public float projectorIntensityMask = 600000;
-
-    public Vector4 intrinsicsLR;
-    public Vector4 intrinsicsP;
 
     //public ComputeShader computeShader;
 
@@ -295,6 +294,7 @@ public class StructureCore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        focalProjector = camLeft.f * projectorScale;
         camLeft.Setup(zNear, zFar);
         camRight.Setup(zNear, zFar);
         camProjector = new CamCollector();
