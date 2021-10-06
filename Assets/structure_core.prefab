@@ -659,8 +659,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   projector: {fileID: 6198338252454193889}
-  patternTexture: {fileID: 2800000, guid: e4978b7494e177d4fbd78816eb2e1b1e, type: 3}
-  maskTexture: {fileID: 2800000, guid: 816abeefe5930194b8a0dd21a8079677, type: 3}
+  patternTextures:
+  - {fileID: 2800000, guid: be025be51ca3134419e10b7ec424b477, type: 3}
+  - {fileID: 2800000, guid: 708b9544e24076144a0c601e0f3454f9, type: 3}
+  - {fileID: 2800000, guid: 13eb39e4d9c7a9a4cab677a315b28f6b, type: 3}
+  - {fileID: 2800000, guid: 8ca841d1df6957f4391257dc90a06149, type: 3}
+  maskTextures:
+  - {fileID: 2800000, guid: 816abeefe5930194b8a0dd21a8079677, type: 3}
+  - {fileID: 2800000, guid: 816abeefe5930194b8a0dd21a8079677, type: 3}
+  - {fileID: 2800000, guid: 816abeefe5930194b8a0dd21a8079677, type: 3}
+  - {fileID: 2800000, guid: 816abeefe5930194b8a0dd21a8079677, type: 3}
   projectorIntensitySpecles: 12000000
   projectorIntensityMask: 600000
   waitAutoExposure: 5
@@ -983,7 +991,7 @@ Light:
       e32: 1
       e33: 0
     m_UseCullingMatrixOverride: 1
-  m_Cookie: {fileID: 2800000, guid: 1162e152dcab8c840b4b6a4dba5893eb, type: 3}
+  m_Cookie: {fileID: 2800000, guid: 13eb39e4d9c7a9a4cab677a315b28f6b, type: 3}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0
